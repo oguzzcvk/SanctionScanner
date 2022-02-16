@@ -49,6 +49,8 @@ namespace SanctionScanner.Service
         public static void GetDetails(List<string> LinkList)
         {
             List<Entity> detailList = new List<Entity>();
+            List<string> detailTitle = new List<string>();
+            List<int> detailPrice = new List<int>();
             HtmlDocument doc = new HtmlDocument();
 
             foreach (var item in LinkList)
@@ -70,18 +72,17 @@ namespace SanctionScanner.Service
                 try
                 {
                     entity.name = doc.DocumentNode.SelectSingleNode("//div[@class='classifiedDetailTitle']//h1").InnerText;
-
+                    
                 }
                 catch (Exception)
                 {
                     entity.name = "İlan Başlığı Bulunamadı!";
+                    
                 }
 
                 try
                 {
                     entity.price = doc.DocumentNode.SelectSingleNode("//div[@class='classifiedDetailContent']//div[@class='class='classifiedInfo']//h3").InnerText;
-
-
 
                 }
                 catch (Exception)
@@ -95,6 +96,44 @@ namespace SanctionScanner.Service
 
 
             }
+
+        }
+
+        public static void GetAvargePrice(List<string> AvargePrice)
+        {
+            List<Entity> entities = new List<Entity>();
+            int sum=0;
+
+            for(int i=0; i<56; i++)
+            {
+                entities[i].price += sum;
+            }
+            Console.WriteLine("Avarge: "+sum/56);
+        }
+
+        public static void GetName(List<string> NameList)
+        {
+            List<Entity> entities = new List<Entity>();
+            string a=" ";
+            for(int i=0; i<56; i++)
+            {
+                entities[i].name = a;
+                NameList.Add(a);
+            }
+            Console.WriteLine("İsim Listesi: " + NameList.ToList());
+        }
+
+        public static void SaveText(List<string> AvargePrice, List<string> NameList)
+        {
+            List<Entity> entities = new List<Entity>();
+            int sum = 0;
+
+            for (int i = 0; i < 56; i++)
+            {
+                System.IO.File.WriteAllText(@"C:\Users\oguzh\Desktop\Evraklar", entities[i].price);
+                System.IO.File.WriteAllText(@"C:\Users\oguzh\Desktop\Evraklar", entities[i].name);
+            }
+            
 
         }
 

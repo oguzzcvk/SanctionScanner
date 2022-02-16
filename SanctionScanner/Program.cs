@@ -10,8 +10,11 @@ namespace SanctionScanner
         static void Main(string[] args)
         {
             CrawlService.GetAllPage();
+            List<string> linklist = new List<string>();
+            linklist.Add("https://www.sahibinden.com/ilan/vasita-otomobil-opel-sahibinden-hatasiz-boyasiz-son-fiyat-998982854/detay");
+            CrawlService.GetDetails(linklist);
             
-            CrawlService.GetDetails();
+            
 
             
 
